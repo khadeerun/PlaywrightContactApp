@@ -10,9 +10,11 @@ It’s excellent as a web application because it allows us to practice more than
 
 - ## Scenarios
 
-### Scenario 1: SignUp
+```bash
+Scenario 1: Verify that a user is successfully signedUp into the application.
 
-**Description:** Verify that a user is successfully signedUp into the application.
+Scenario Description: Verify that a user is able to click on add contact Button and fill the details.
+TestName: example.spec.js
 
 **Steps:**
 1. Navigate to the SignUp page.
@@ -21,8 +23,8 @@ It’s excellent as a web application because it allows us to practice more than
 
 **Expected Outcome:** The user should be logged in and redirected to the application landing page.
 
-- ## Scenarios
-
+```
+```bash
 ### Scenario 2: Add Contact
 
 **Description:** Verify that a user is able to click on add contact Button and fill the details.
@@ -41,5 +43,81 @@ It’s excellent as a web application because it allows us to practice more than
 4. Click on the Submit button.
 
 **Expected Outcome:** The user should have added the contact details and listed it in landing page.
- 
+
+```
+
+```bash
+Scenario 3: Verify that a user is successfully signedUp into the application.
+
+Scenario Description: Verify that a user is able to click on add contact Button and fill the details.
+TestName: example.spec.js
+
+**Steps:**
+1. Navigate to the SignUp page.
+2. Enter the details of the user (FirstName, LastName, username and password).
+3. Click on the Submit button.
+
+**Expected Outcome:** The user should be logged in and redirected to the application landing page.
+
+```
+
+ #### Installation
+
+Install the dependencies and devDependencies to run the test.
+
+- Clone (OR) Download this repo as zip folder on to your local machine
+- Navigate to project's directory on terminal and run the following commands:
+
+Clone the repository
+
+```bash
+git clone https://github.com/khadeerun/PlaywrightContactApp/tree/main/tests
+```
+
+Install dependencies
+
+```bash
+npm install
+npx playwright install
+```
+
+#### Run application
+
+Run tests in Parallel chrome
+
+```bash
+npm run test:chrome - For tests only on chrome browser
+```
+
+Run tests in Parallel firefox
+
+```bash
+npm run test:firefox - For tests only on firefox browser
+```
+
+Run tests in Parallel safari
+
+```bash
+npm run test:safari - For tests only on safari browser
+```
+
+Run tests in Parallel edge
+
+```bash
+npm run test:edge - For tests only on edge browser
+```
+
+Run tests in Parallel on all browsers (chrome, safari, edge and firefox)
+
+```bash
+npm run test  - For tests only on all browsers
+```
+
+#### Playwright Test Report 
+
+```bash
+Html-test-report :
+npm run test:chrome (OR)  npm run test:edge (OR) npm run html-report
+```
+
 
