@@ -181,3 +181,8 @@ PS D:\PlaywrightContactApp>
 
 
 ```
+
+![show-report](https://github.com/khadeerun/PlaywrightContactApp/assets/110010732/492d8128-7556-4682-90b7-9dd231d8566e)
+
+
+
