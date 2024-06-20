@@ -164,4 +164,20 @@ Html-test-report :
 npm run test:chrome (OR)  npm run test:edge (OR) npm run html-report
 ```
 
+PS D:\PlaywrightContactApp> npx playwright test
+```bash
+**Overall Results**:
 
+Running 5 tests using 4 workers
+[chromium] › example.spec.js:7:5 › To Group › SignUp Page
+Table not found!
+  5 passed (58.5s)
+
+To open last HTML report run:
+
+  npx playwright show-report
+
+PS D:\PlaywrightContactApp> 
+
+
+```
