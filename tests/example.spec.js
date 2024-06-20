@@ -36,7 +36,7 @@ test('ContactListDetails', async ({ page }) => {
  await obj.page.pause();
 });
 
-test.only('EditContact', async ({ page }) => {
+test('EditContact', async ({ page }) => {
   const obj = new Details(page);
  await obj.openBrowser();
  await obj.page.waitForTimeout(5000);
