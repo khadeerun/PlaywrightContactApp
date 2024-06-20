@@ -16,20 +16,20 @@ Scenario 1: Verify that a user is successfully signedUp into the application.
 Scenario Description: Verify that a user is able to click on add contact Button and fill the details.
 TestName: example.spec.js
 
-**Steps:**
+Steps:
 1. Navigate to the SignUp page.
 2. Enter the details of the user (FirstName, LastName, username and password).
 3. Click on the Submit button.
 
-**Expected Outcome:** The user should be logged in and redirected to the application landing page.
+Expected Outcome: The user should be logged in and redirected to the application landing page.
 
 ```
 ```bash
 ### Scenario 2: Add Contact
 
-**Description:** Verify that a user is able to click on add contact Button and fill the details.
+Description: Verify that a user is able to click on add contact Button and fill the details.
 
-**Steps:**
+Steps:
 1. Navigate to the Add Contact Button.
 2. Enter the details of the Contact
    - FirstName,
@@ -42,22 +42,37 @@ TestName: example.spec.js
    - Country
 4. Click on the Submit button.
 
-**Expected Outcome:** The user should have added the contact details and listed it in landing page.
+Expected Outcome: The user should have added the contact details and listed it in landing page.
 
 ```
 
 ```bash
-Scenario 3: Verify that a user is successfully signedUp into the application.
+Scenario 3: Verify that a user is successful to view the ContactListDetails in the application.
 
-Scenario Description: Verify that a user is able to click on add contact Button and fill the details.
+Scenario Description: Verify that a user is able to Login with the created username and password and click on login Button and view the contact list Details.
 TestName: example.spec.js
 
-**Steps:**
-1. Navigate to the SignUp page.
-2. Enter the details of the user (FirstName, LastName, username and password).
+Steps:
+1. Navigate to the Login page.
+2. Enter the details of the user (username and password).
 3. Click on the Submit button.
 
-**Expected Outcome:** The user should be logged in and redirected to the application landing page.
+Expected Outcome: The user should be logged in and redirected to the application landing page.
+
+```
+
+```bash
+Scenario 3: Verify that a user is successful to view the ContactListDetails in the application.
+
+Scenario Description: Verify that a user is able to Login with the created username and password and click on login Button and view the contact list Details.
+TestName: example.spec.js
+
+Steps:
+1. Navigate to the Login page.
+2. Enter the details of the user (username and password).
+3. Click on the Submit button.
+
+Expected Outcome: The user should be logged in and redirected to the application landing page.
 
 ```
 
