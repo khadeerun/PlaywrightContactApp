@@ -25,7 +25,7 @@ Expected Outcome: The user should be logged in and redirected to the application
 
 ```
 ```bash
-Scenario 2: Add Contact
+Scenario 2: Verify that a user is successfully loggedIn and able to add the contact in the add contact page.
 
 Description: Verify that a user is able to click on add contact Button and fill the details.
 
@@ -56,21 +56,50 @@ Steps:
 1. Navigate to the Login page.
 2. Enter the details of the user (username and password).
 3. Click on the Submit button.
+4. The user directed to landing page.
+5. The user is able to view the list of contact details.
+6. click on the contact details
+7. Navigate to the contact details.
 
 Expected Outcome: The user should be logged in and redirected to the application landing page.
 
 ```
 
 ```bash
-Scenario 4: Verify that a user is successful to view the ContactListDetails in the application.
+Scenario 4: Verify that a user is successful to view and edit/Update the contact details in the application.
 
-Scenario Description: Verify that a user is able to Login with the created username and password and click on login Button and view the contact list Details.
+Scenario Description: Verify that a user is able to Login with the created username and password and click on contact details and view the contact list Details to edit or update if any on the editing page.
 TestName: example.spec.js
 
 Steps:
 1. Navigate to the Login page.
 2. Enter the details of the user (username and password).
 3. Click on the Submit button.
+4. Click on the contact table.
+5. Navigate to the editing page and check the details.
+6. Click on Edit Contact button.
+7. Update the contact details and click on submit.
+
+
+
+Expected Outcome: The user updated the contact details and able to view the new contact details.
+
+```
+
+```bash
+Scenario 5: Verify that the a user is successfully deleted the any of the Contact Details in the application.
+
+Scenario Description: Verify that a user is able to Login with the created username and password and able to delete the contact details.
+TestName: example.spec.js
+
+Steps:
+1. Navigate to the Login page.
+2. Enter the details of the user (username and password).
+3. Click on the Submit button.
+4. Click on the contact details table.
+5. Navigate to the contact details page.
+6. Click on delete button.
+7. click on the dialog button confirming for deletion.
 
 Expected Outcome: The user should be logged in and redirected to the application landing page.
 
