@@ -25,7 +25,7 @@ Expected Outcome: The user should be logged in and redirected to the application
 
 ```
 ```bash
-### Scenario 2: Add Contact
+Scenario 2: Add Contact
 
 Description: Verify that a user is able to click on add contact Button and fill the details.
 
@@ -62,7 +62,7 @@ Expected Outcome: The user should be logged in and redirected to the application
 ```
 
 ```bash
-Scenario 3: Verify that a user is successful to view the ContactListDetails in the application.
+Scenario 4: Verify that a user is successful to view the ContactListDetails in the application.
 
 Scenario Description: Verify that a user is able to Login with the created username and password and click on login Button and view the contact list Details.
 TestName: example.spec.js
