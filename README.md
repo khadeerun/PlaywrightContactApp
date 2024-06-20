@@ -40,6 +40,6 @@ It’s excellent as a web application because it allows us to practice more than
    - Country
 4. Click on the Submit button.
 
-**Expected Outcome:** The user should be logged in and redirected to the application landing page.
+**Expected Outcome:** The user should have added the contact details and listed it in landing page.
  
 
