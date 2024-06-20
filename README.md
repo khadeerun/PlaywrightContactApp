@@ -4,7 +4,7 @@ This web application is a contact list application with a web UI component and a
 It’s excellent as a web application because it allows us to practice more than just UI testing.
 
 -  **URL:** https://thinking-tester-contact-list.herokuapp.com/
-*   **Framework**: This App is built using Node.js with a frontend framework (if known)
+*   **Framework**: This App is built using Node.js with a frontend framework
 +  **OS:** Windows
 - **IDE:** Visual Studio Code
 
