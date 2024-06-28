@@ -7,7 +7,7 @@
     
     "start": "node index.js",
     "test": "playwright test", 
-    "build": "echo 'Building the project...' && mkdir -p dist && cp -R ./src ./dist/",
+    "build": "echo 'Building the project...' && mkdir src -p dist && cp -R ./src ./dist/",
     "deploy": "echo \"Deploying the project...\" && cp -r dist/* /C:/Users/KHADEERUN/Downloads"
   }
 }
