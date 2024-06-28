@@ -19,7 +19,7 @@ pipeline {
                 // Install project dependencies
                 bat 'npm install'
                 bat 'npx playwright install'
-                bat 'npx playwright@latest'
+                
             }
         }
 
