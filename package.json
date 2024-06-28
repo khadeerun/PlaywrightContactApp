@@ -7,7 +7,7 @@
     
     "start": "node index.js",
     "test": "playwright test", 
-    "build": "echo \"Building the project...\" && mkdir dist && xcopy src dist /E /I",
+    "build": "echo \"Building the project...\" && mkdir dist && xcopy .\\src\\* .\\dist\\ /E /I",
     "deploy": "echo \"Deploying the project...\" && cp -r dist/* /path/to/deployment/directory"
   }
 }
