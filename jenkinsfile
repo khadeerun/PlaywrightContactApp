@@ -34,7 +34,7 @@ pipeline {
             steps {
                 // Install dependencies and build the project
                 script {
-                    def npmHome = tool name: 'NodeJS', type: 'NodeJSInstallation'
+                    def npmHome = tool name: 'NodeJS', type: 'NodeJS'
                     env.PATH = "${npmHome}/bin:${env.PATH}"
                 }
                 //bat 'npm install'
