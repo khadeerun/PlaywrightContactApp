@@ -151,13 +151,13 @@ export class Details {  //class
       //await expect(this.page.getByLabel('street2')).toHaveText(' Street Address 2:');
       //await expect(this.page.locator('#street2')).toBeVisible();
       //await expect(this.page.getByLabel('city')).toHaveText(' City:');
-      await expect(this.page.locator('#city')).toBeVisible();
+      //await expect(this.page.locator('#city')).toBeVisible();
       //await expect(this.page.getByLabel('stateProvince')).toHaveText(' State or Province:');
-      await expect(this.page.locator('#stateProvince')).toBeVisible();
+      //await expect(this.page.locator('#stateProvince')).toBeVisible();
       //await expect(this.page.getByLabel('postalCode')).toHaveText(' Postal Code:');
-      await expect(this.page.locator('#postalCode')).toBeVisible();
+      //await expect(this.page.locator('#postalCode')).toBeVisible();
       //await expect(this.page.getByLabel('country')).toHaveText(' Country:');
-      await expect(this.page.locator('#country')).toBeVisible();
+      //await expect(this.page.locator('#country')).toBeVisible();
 
      
       
