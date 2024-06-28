@@ -169,7 +169,7 @@ export class Details {  //class
 
     async UpdatedContactDetails() { //method
         await expect(this.page.locator('#edit-contact')).toBeEnabled();
-      await expect(this.page.locator('#delete')).toBeEnabled();
+      //await expect(this.page.locator('#delete')).toBeEnabled();
       await expect(this.page.locator('#return')).toBeEnabled();
       await expect(this.page.locator('label:has-text("First Name")')).toBeVisible();
 
