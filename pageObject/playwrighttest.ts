@@ -181,7 +181,7 @@ export class Details {  //class
      //await expect(this.page.locator('label:has-text("LastName")')).toBeVisible();
      await expect(this.page.locator('#lastName')).toBeVisible();
      await expect(this.page.locator('label:has-text("Date of Birth:")')).toBeVisible();
-     await this.page.type('#birthdate', '2024-08-21')
+     await this.page.type('#birthdate', '2024-05-25')
      //await expect(this.page.getByLabel('birthdate')).toHaveAttribute('placeholder', 'Date of Birth:');
      await expect(this.page.locator('#birthdate')).toBeVisible();
 
