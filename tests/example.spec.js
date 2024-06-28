@@ -45,7 +45,7 @@ test('EditContact', async ({ page }) => {
  await obj.ContactListDetails();
  await obj.page.waitForTimeout(5000);
  await obj.EditContact();
- await obj.page.waitForTimeout(5000);
+ //await obj.page.waitForTimeout(5000);
  //await obj.UpdatedContactDetails();
  //await obj.page.waitForTimeout(5000);
  await obj.page.pause();
