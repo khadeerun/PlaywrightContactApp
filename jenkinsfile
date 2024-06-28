@@ -30,9 +30,14 @@ pipeline {
             }
         }
 
-        stage('Build') {
+       stage('Build') {
             steps {
-                // Build the project
+                // Install dependencies and build the project
+                script {
+                    def npmHome = tool name: 'NodeJS', type: 'NodeJSInstallation'
+                    env.PATH = "${npmHome}/bin:${env.PATH}"
+                }
+                //bat 'npm install'
                 bat 'npm run build'
             }
         }
@@ -40,8 +45,10 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Deploy the project
-                // Adjust this step to match your deployment process
-                bat 'npm run deploy'
+                bat '''
+                echo "Deploying the project..."
+                xcopy .\\dist\\* \\path\\to\\deployment\\directory /E /I
+                '''
             }
         }
     }
