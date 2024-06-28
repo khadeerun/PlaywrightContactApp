@@ -114,7 +114,7 @@ export class Details {  //class
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(5)')).toBeVisible();
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(5)')).toHaveText('06303457585');
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(6)')).toBeVisible();
-      await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(6)')).toHaveText('Nehru Nagar, Kadapa, India ');
+      await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(6)')).toHaveText('Nehru Nagar, Kadapa, Chinna Chowk, India, ');
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(7)')).toBeVisible();
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(7)')).toHaveText('Y.S.R. Andhra Pradesh 516002');
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(8)')).toBeVisible();
@@ -148,16 +148,16 @@ export class Details {  //class
       await expect(this.page.locator('#phone')).toBeVisible();
       await expect(this.page.locator('label[for="street1"]')).toHaveText('Street Address 1:');
       await expect(this.page.locator('#street1')).toBeVisible();
-      //await expect(this.page.getByLabel('street2')).toHaveText(' Street Address 2:');
-      //await expect(this.page.locator('#street2')).toBeVisible();
-      //await expect(this.page.getByLabel('city')).toHaveText(' City:');
-      //await expect(this.page.locator('#city')).toBeVisible();
-      //await expect(this.page.getByLabel('stateProvince')).toHaveText(' State or Province:');
-      //await expect(this.page.locator('#stateProvince')).toBeVisible();
-      //await expect(this.page.getByLabel('postalCode')).toHaveText(' Postal Code:');
-      //await expect(this.page.locator('#postalCode')).toBeVisible();
-      //await expect(this.page.getByLabel('country')).toHaveText(' Country:');
-      //await expect(this.page.locator('#country')).toBeVisible();
+      await expect(this.page.locator('label[for="street2"]')).toHaveText('Street Address 2:');
+      await expect(this.page.locator('#street2')).toBeVisible();
+      await expect(this.page.locator('label[for="city"]')).toHaveText('City:');
+      await expect(this.page.locator('#city')).toBeVisible();
+      await expect(this.page.locator('label[for="stateProvince"]')).toHaveText(' State or Province:');
+      await expect(this.page.locator('#stateProvince')).toBeVisible();
+      await expect(this.page.locator('label[for="postalCode"]')).toHaveText(' Postal Code:');
+      await expect(this.page.locator('#postalCode')).toBeVisible();
+      await expect(this.page.locator('label[for="country"]')).toHaveText(' Country:');
+      await expect(this.page.locator('#country')).toBeVisible();
 
      
       
