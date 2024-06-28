@@ -18,13 +18,15 @@ pipeline {
             steps {
                 // Install project dependencies
                 bat 'npm install'
+                bat 'npx playwright install'
+                bat 'npx playwright@latest'
             }
         }
 
         stage('Test') {
             steps {
                 // Run tests
-                bat 'npm test'
+                bat 'npx playwright test'
             }
         }
 
