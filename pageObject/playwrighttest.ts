@@ -117,7 +117,7 @@ export class Details {  //class
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(5)')).toBeVisible();
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(5)')).toHaveText('06303457585');
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(6)')).toBeVisible();
-      await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(6)')).toHaveText('Nehru Nagar, Kadapa, Chinna Chowk, India ');
+      await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(6)')).toHaveText('Nehru Nagar, Kadapa, India');
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(7)')).toBeVisible();
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(7)')).toHaveText('Y.S.R. Andhra Pradesh 516002');
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(8)')).toBeVisible();
@@ -168,43 +168,23 @@ export class Details {  //class
     }
 
     async UpdatedContactDetails() { //method
-        //await expect(this.page.locator('body > div > header > h1').locator("h1", {hasText: "Contact Details"})).toBeVisible();
-      await this.page.locator('//*[@id="myTable"]/tr[1]').click();
-      
-      //['Name', 'Birthdate', 'Email', 'Phone', 'Address', 'City, State/Province, Postal Code', 'Country']
-      await expect(this.page.locator('#edit-contact')).toBeEnabled();
-      await expect(this.page.locator('#delete')).toBeEnabled();
-      await expect(this.page.locator('#return')).toBeEnabled();
-      await expect(this.page.locator('label:has-text("First Name")')).toBeVisible();
+        await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(2)')).toHaveText('Khadeerunnisa Shaik');
 
-      await expect(this.page.locator('#firstName')).toBeVisible();
-      await expect(this.page.locator('label:has-text("Last Name")')).toBeVisible();
-      //await expect(this.page.locator('label:has-text("LastName")')).toBeVisible();
-      await expect(this.page.locator('#lastName')).toBeVisible();
-      await expect(this.page.locator('label:has-text("Date of Birth:")')).toBeVisible();
-      //await expect(this.page.getByLabel('birthdate')).toHaveAttribute('placeholder', 'Date of Birth:');
-      await expect(this.page.locator('#birthdate')).toBeVisible();
-      await expect(this.page.locator('label[for="email"]')).toHaveText('Email:');
-
-      await expect(this.page.locator('#email')).toBeVisible();
-      await expect(this.page.locator('label[for="phone"]')).toHaveText('Phone:');
-
-      await expect(this.page.locator('#phone')).toBeVisible();
-      await expect(this.page.locator('label[for="street1"]')).toHaveText('Street Address 1:');
-      await expect(this.page.locator('#street1')).toBeVisible();
-      await expect(this.page.locator('label[for="street2"]')).toHaveText('Street Address 2:');
-      await expect(this.page.locator('#street2')).toBeVisible();
-      await expect(this.page.locator('label[for="city"]')).toHaveText('City:');
-      await expect(this.page.locator('#city')).toBeVisible();
-      await expect(this.page.locator('label[for="stateProvince"]')).toHaveText(' State or Province:');
-      await expect(this.page.locator('#stateProvince')).toBeVisible();
-      await expect(this.page.locator('label[for="postalCode"]')).toHaveText(' Postal Code:');
-      await expect(this.page.locator('#postalCode')).toBeVisible();
-      await expect(this.page.locator('label[for="country"]')).toHaveText(' Country:');
-      await expect(this.page.locator('#country')).toBeVisible();
-
-     
-      
+        await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(3)')).toBeVisible();
+        const locator =this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(3)');
+        await expect(locator).toHaveText('2024-05-25');
+        await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(4)')).toBeVisible();
+        await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(4)')).toHaveText('khadeerunnisashaik226@gmail.com');
+        await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(5)')).toBeVisible();
+        await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(5)')).toHaveText('06303457585');
+        await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(6)')).toBeVisible();
+        await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(6)')).toHaveText('Nehru Nagar, Kadapa, India');
+        await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(7)')).toBeVisible();
+        await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(7)')).toHaveText('Y.S.R. Andhra Pradesh 516002');
+        await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(8)')).toBeVisible();
+        await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(8)')).toHaveText('India');
+        await this.page.locator('#myTable > tr:nth-child(3)').click();
+          
       
     }
     async EditContact() { //method
@@ -252,7 +232,13 @@ export class Details {  //class
      await expect(this.page.locator('#stateProvince')).toBeVisible();
 
      await expect(this.page.locator('label[for="postalCode"]')).toHaveText(' Postal Code:');
-     await this.page.locator('#postalCode').fill('516001');
+     const input = this.page.locator('input[id="postalCode"]');
+     //const input = this.page.locator('516002');
+     //input.fill('516001')
+     await input.fill('Y.S.R. Andhra Pradesh 516002');
+     const new_text = input.getAttribute('Y.S.R. Andhra Pradesh 516002')
+     await expect(this.page.locator('#postalCode')).toBeVisible();
+     
 
      await expect(this.page.locator('label[for="country"]')).toHaveText(' Country:');
      await expect(this.page.locator('#country')).toBeVisible();
