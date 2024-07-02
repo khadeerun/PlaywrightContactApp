@@ -3,5 +3,11 @@
     "@playwright/test": "^1.44.1",
     "@types/node": "^20.14.5"
   },
-  "scripts": {}
+  "scripts": {
+    
+    "start": "node index.js",
+    "test": "playwright test", 
+    "build": "echo 'Building the project...' && mkdir src dist && xcopy /E /I src dist",
+    "deploy": "echo \"Deploying the project...\" && cp -r dist/* /C:/Users/KHADEERUN/Downloads"
+  }
 }

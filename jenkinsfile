@@ -1,0 +1,72 @@
+pipeline {
+    agent any
+
+    environment {
+        NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation' // Ensure this matches the name you provided in Jenkins Node.js configuration
+        PATH = "${NODEJS_HOME}/bin:${env.PATH}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Correct Git repository URL
+                git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // Install project dependencies
+                bat 'npm install'
+                bat 'npx playwright install'
+                
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Run tests
+                bat 'npx playwright test'
+            }
+        }
+
+       stage('Build') {
+            steps {
+                // Install dependencies and build the project
+                script {
+                    def npmHome = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+                    env.PATH = "${npmHome}/bin:${env.PATH}"
+                }
+                bat 'npm install'
+                bat 'npm run build'
+
+
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Deploy the project
+                bat '''
+                echo "Deploying the project..."
+                xcopy .\\dist\\* \\path\\to\\deployment\\directory /E /I
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            // Clean up the workspace
+            cleanWs()
+        }
+        success {
+            // Notify success
+            echo 'Build and deployment successful!'
+        }
+        failure {
+            // Notify failure
+            echo 'Build or deployment failed!'
+        }
+    }
+}

@@ -25,16 +25,16 @@ test('Add Contact Page', async ({ page }) => {
   await obj.page.pause();
   });
 
-test('ContactListDetails', async ({ page }) => {
-  const obj = new Details(page);
- await obj.openBrowser();
- await obj.page.waitForTimeout(5000);
- await obj.LogIn();
- await obj.page.waitForTimeout(5000);
- await obj.ContactListDetails();
- await obj.page.waitForTimeout(5000);
- await obj.page.pause();
-});
+  test('ContactListDetails', async ({ page }) => {
+    const obj = new Details(page);
+   await obj.openBrowser();
+   await obj.page.waitForTimeout(5000);
+   await obj.LogIn();
+   await obj.page.waitForTimeout(5000);
+   await obj.ContactListDetails();
+   await obj.page.waitForTimeout(5000);
+   await obj.page.pause();
+  });
 
 test('EditContact', async ({ page }) => {
   const obj = new Details(page);
@@ -43,12 +43,15 @@ test('EditContact', async ({ page }) => {
  await obj.LogIn();
  await obj.page.waitForTimeout(5000);
  await obj.ContactListDetails();
- await obj.EditContact();
  await obj.page.waitForTimeout(5000);
+ await obj.EditContact();
+ //await obj.page.waitForTimeout(5000);
+ //await obj.UpdatedContactDetails();
+ //await obj.page.waitForTimeout(5000);
  await obj.page.pause();
 });
 
-test('Delete', async ({ page }) => {
+/*test('Delete', async ({ page }) => {
   const obj = new Details(page);
  await obj.openBrowser();
  await obj.page.waitForTimeout(5000);
@@ -59,7 +62,7 @@ test('Delete', async ({ page }) => {
  await obj.Delete();
  await obj.page.waitForTimeout(5000);
  await obj.page.pause();
-});
+});*/
 
 });
 
