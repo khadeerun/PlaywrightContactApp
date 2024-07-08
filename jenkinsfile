@@ -5,17 +5,7 @@ pipeline {
         LOCAL_DIR = 'C:/Users/KHADEERUN/SampleProject' // Using forward slashes
     }
 
-    stages {
-        stage('Cleanup') {
-            steps {
-                script {
-                    def dirPath = SampleProject
-                    if (fileExists(C:/Users/KHADEERUN/SampleProject)) {
-                        deleteDir()
-                    }
-                }
-            }
-        }
+
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', credentialsId: 'MyGitHubCreds'
@@ -56,7 +46,7 @@ pipeline {
                 }
             }
         }
-    }
+    
 }
 
 
