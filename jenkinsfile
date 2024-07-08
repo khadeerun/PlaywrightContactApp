@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        LOCAL_DIR = 'D:' // Set your local directory path here
+        LOCAL_DIR = 'D:\DummyProject' // Set your local directory path here
     }
 
     stages {
@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     def dirPath = "$D:\PlaywrightContactApp"
-                    if (fileExists(dirPath)) {
+                    if (fileExists(D:\PlaywrightContactApp)) {
                         deleteDir()
                     }
                 }
@@ -35,7 +35,7 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                dir('PlaywrightContactApp') {
+                dir('DummyProject') {
                     bat 'npm install'
                 }
             }
@@ -43,11 +43,11 @@ pipeline {
         stage('Copy Files to Local Directory') {
             steps {
                 powershell '''
-                $srcDir = "${env.WORKSPACE}\\PlaywrightContactApp"
+                $srcDir = "${env.D:\PlaywrightContactApp}\\PlaywrightContactApp"
                 $destDir = "${env.D:\DummyProject}"
                 
                 # Copy files from workspace to local directory
-                Copy-Item -Path "$D:\PlaywrightContactApp\\*" -Destination $destDir -Recurse -Force
+                Copy-Item -Path "$D:\PlaywrightContactApp\\*" -Destination $D:\DummyProject -Recurse -Force
                 '''
             }
         }
