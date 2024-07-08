@@ -26,8 +26,8 @@ pipeline {
         stage('Test') {
             steps {
                 // Run tests
-bat 'export DISPLAY=:99'
-                    bat 'Xvfb :99 -screen 0 1280x1024x24 &'
+                    //bat 'export DISPLAY=:99'
+                    //bat 'Xvfb :99 -screen 0 1280x1024x24 &'
         bat 'npx playwright test'
             }
         }
