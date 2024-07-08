@@ -21,7 +21,7 @@ pipeline {
                 git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', credentialsId: 'MyGitHubCreds'
             }
         }
-        stage('Create Local Directory') {
+        /*stage('Create Local Directory') {
     steps {
         powershell '''
         $destDir = "D:\\SampleProject"
@@ -38,9 +38,10 @@ pipeline {
             steps {
                 dir('SampleProject') {
                     bat 'npm install'
+bat 'npx playwright test'
                 }
             }
-        }
+        }*/
         stage('Copy Files to Local Directory') {
             steps {
                 powershell '''
@@ -52,10 +53,18 @@ pipeline {
                 '''
             }
         }
+stage('Install Dependencies') {
+            steps {
+                dir('SampleProject') {
+                    bat 'npm install'
+bat 'npx playwright test'
+                }
+            }
+        }
         stage('Run Tests') {
             steps {
                 script {
-                    dir("${env.LOCAL_DIR}") {
+                    dir("D:\\SampleProject") {
                         bat 'dir'  // List files to ensure they are copied
                         bat 'npx playwright test' // Run Playwright tests
                     }
