@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        LOCAL_DIR = 'https://github.com/khadeerun/PlaywrightContactApp.git' // Set your local directory path here
+        LOCAL_DIR = 'C:\Users\KHADEERUN\.jenkins\workspace\DemoJob' // Set your local directory path here
     }
 
     stages {
@@ -46,11 +46,11 @@ bat 'npx playwright test'
         stage('Copy Files to Local Directory') {
             steps {
                 powershell '''
-                $srcDir = "https://github.com/khadeerun/PlaywrightContactApp.git"
+                $srcDir = "C:\Users\KHADEERUN\.jenkins\workspace\DemoJob"
                 $destDir = "D:\\SampleProject"
                 
                 # Copy files from workspace to local directory
-                Copy-Item -Path "https://github.com/khadeerun/PlaywrightContactApp.git" -Destination $destDir -Recurse -Force
+                Copy-Item -Path "C:\Users\KHADEERUN\.jenkins\workspace\DemoJob" -Destination $destDir -Recurse -Force
                 '''
             }
         }
