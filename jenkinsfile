@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     def dirPath = "${WORKSPACE}/PlaywrightContactApp"
-                    if (fileExists(D:\SampleProject)) {
+                    if (fileExists(D:\SampleProject) {
                         deleteDir()
                     }
                 }
@@ -30,27 +30,33 @@ pipeline {
         }
         stage('Copy Files to Local Directory') {
             steps {
-                script {
-                    def srcDir = "${WORKSPACE}/PlaywrightContactApp"
-                    def destDir = "${D:}"
-                    
-                    // Create destination directory if it doesn't exist
-                    new File(SampleProject).mkdirs()
-                    
-                    // Copy files from workspace to local directory
-                    bat "xcopy ${C:\Users\KHADEERUN\.jenkins\workspace\DemoJob} ${SampleProject} /E /H /C /I"
+                powershell '''
+                $srcDir = "${env.WORKSPACE}\\PlaywrightContactApp"
+                $destDir = "${env.D:\SampleProject}"
+                
+                # Create destination directory if it doesn't exist
+                if (-Not (Test-Path -Path $destDir)) {
+                    New-Item -ItemType Directory -Force -Path $destDir
                 }
+                
+                # Copy files from workspace to local directory
+                Copy-Item -Path "$C:\Users\KHADEERUN\.jenkins\workspace\DemoJob\*" -Destination $destDir -Recurse -Force
+                '''
             }
         }
         stage('Run Tests') {
             steps {
-                dir("${D:\SampleProject}") {
-                    bat 'npx playwright test'
+                script {
+                    dir("${env.D:\SampleProject}") {
+                        bat 'dir'  // List files to ensure they are copied
+                        bat 'npx playwright test' // Run Playwright tests
+                    }
                 }
             }
         }
     }
 }
+
 
 
 
