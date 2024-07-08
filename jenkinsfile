@@ -1,3 +1,5 @@
+
+
 pipeline {
     agent any
 
@@ -5,20 +7,23 @@ pipeline {
         LOCAL_DIR = 'C:/Users/KHADEERUN/SampleProject' // Using forward slashes
     }
 
-
+    stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', credentialsId: 'MyGitHubCreds'
+                script {
+                    git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', credentialsId: 'MyGitHubCreds'
+                }
             }
         }
+
         stage('Install Dependencies') {
             steps {
-                dir(SampleProject) {
-                    script {
+                script {
+                    dir(env.LOCAL_DIR) {
                         // Check if package.json exists
                         def packageJson = fileExists('package.json')
                         if (!packageJson) {
-                            error('package.json not found in ${env.LOCAL_DIR}')
+                            error "package.json not found in ${env.LOCAL_DIR}"
                         } else {
                             // Install npm dependencies and Playwright
                             bat 'npm install'
@@ -28,25 +33,27 @@ pipeline {
                 }
             }
         }
+
         stage('Copy Files to Local Directory') {
             steps {
                 script {
                     // Copy files from workspace to local directory
-                    bat 'xcopy /s /Y "C:\\Users\\KHADEERUN\\.jenkins\\workspace\\DemoJob\\*" "C:/Users/KHADEERUN/SampleProject"'
+                    bat 'xcopy /s /Y "C:\\Users\\KHADEERUN\\.jenkins\\workspace\\DemoJob\\*" "${env.LOCAL_DIR}"'
                 }
             }
         }
+
         stage('Run Tests') {
             steps {
                 script {
-                    dir(SampleProject) {
+                    dir(env.LOCAL_DIR) {
                         bat 'dir'  // List files to ensure they are copied
                         bat 'npx playwright test' // Run Playwright tests
                     }
                 }
             }
         }
-    
+    }
 }
 
 
