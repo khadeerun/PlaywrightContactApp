@@ -2,15 +2,15 @@ pipeline {
     agent any
 
     environment {
-        LOCAL_DIR = 'D:\DummyProject' // Set your local directory path here
+        LOCAL_DIR = 'D:\\DummyProject' // Set your local directory path here
     }
 
     stages {
         stage('Cleanup') {
             steps {
                 script {
-                    def dirPath = "$D:\PlaywrightContactApp"
-                    if (fileExists(D:\PlaywrightContactApp)) {
+                    def dirPath = "D:\\PlaywrightContactApp"
+                    if (fileExists(dirPath)) {
                         deleteDir()
                     }
                 }
@@ -24,11 +24,11 @@ pipeline {
         stage('Create Local Directory') {
             steps {
                 powershell '''
-                $destDir = "${env.D:}"
+                $destDir = "${env.LOCAL_DIR}"
                 
                 # Create destination directory if it doesn't exist
-                if (-Not (Test-Path -Path $DummyProject)) {
-                    New-Item -ItemType Directory -Force -Path $D:\DummyProject
+                if (-Not (Test-Path -Path $destDir)) {
+                    New-Item -ItemType Directory -Force -Path $destDir
                 }
                 '''
             }
@@ -43,18 +43,18 @@ pipeline {
         stage('Copy Files to Local Directory') {
             steps {
                 powershell '''
-                $srcDir = "${env.D:\PlaywrightContactApp}\\PlaywrightContactApp"
-                $destDir = "${env.D:\DummyProject}"
+                $srcDir = "${env.LOCAL_DIR}\\PlaywrightContactApp"
+                $destDir = "${env.LOCAL_DIR}"
                 
                 # Copy files from workspace to local directory
-                Copy-Item -Path "$D:\PlaywrightContactApp\\*" -Destination $D:\DummyProject -Recurse -Force
+                Copy-Item -Path "D:\\PlaywrightContactApp\\*" -Destination $destDir -Recurse -Force
                 '''
             }
         }
         stage('Run Tests') {
             steps {
                 script {
-                    dir("${env.D:\DummyProject}") {
+                    dir("${env.LOCAL_DIR}") {
                         bat 'dir'  // List files to ensure they are copied
                         bat 'npx playwright test' // Run Playwright tests
                     }
@@ -63,6 +63,7 @@ pipeline {
         }
     }
 }
+
 
 
 
