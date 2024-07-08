@@ -50,7 +50,7 @@ bat 'npx playwright install'
         stage('Run Tests') {
             steps {
                 script {
-                    dir("${env.LOCAL_DIR}") {
+                    dir("${C:\Users\KHADEERUN\SampleProject}") {
                         bat 'dir'  // List files to ensure they are copied
                         bat 'npx playwright test' // Run Playwright tests
                     }
