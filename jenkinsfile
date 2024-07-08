@@ -9,8 +9,8 @@ pipeline {
         stage('Cleanup') {
             steps {
                 script {
-                    def dirPath = "${env.LOCAL_DIR}"
-                    if (fileExists(dirPath)) {
+                    def dirPath = SampleProject
+                    if (fileExists(C:/Users/KHADEERUN/SampleProject)) {
                         deleteDir()
                     }
                 }
@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                dir("${env.LOCAL_DIR}") {
+                dir(C:/Users/KHADEERUN/SampleProject) {
                     script {
                         // Check if package.json exists
                         def packageJson = fileExists('package.json')
@@ -49,7 +49,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    dir("${env.LOCAL_DIR}") {
+                    dir(SampleProject) {
                         bat 'dir'  // List files to ensure they are copied
                         bat 'npx playwright test' // Run Playwright tests
                     }
