@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        LOCAL_DIR = 'D:\\PlaywrightContactApp' // Set your local directory path here
+        LOCAL_DIR = 'https://github.com/khadeerun/PlaywrightContactApp.git' // Set your local directory path here
     }
 
     stages {
         stage('Cleanup') {
             steps {
                 script {
-                    def dirPath = "D:\\PlaywrightContactApp"
+                    def dirPath = "D:\\SampleProject"
                     if (fileExists(dirPath)) {
                         deleteDir()
                     }
@@ -44,11 +44,11 @@ pipeline {
         stage('Copy Files to Local Directory') {
             steps {
                 powershell '''
-                $srcDir = "${env.LOCAL_DIR}\\PlaywrightContactApp"
-                $destDir = "${env.LOCAL_DIR}"
+                $srcDir = "https://github.com/khadeerun/PlaywrightContactApp.git"
+                $destDir = "D:\\SampleProject"
                 
                 # Copy files from workspace to local directory
-                Copy-Item -Path "D:\\PlaywrightContactApp\\*" -Destination $destDir -Recurse -Force
+                Copy-Item -Path "https://github.com/khadeerun/PlaywrightContactApp.git" -Destination $destDir -Recurse -Force
                 '''
             }
         }
