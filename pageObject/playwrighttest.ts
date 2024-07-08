@@ -117,7 +117,7 @@ export class Details {  //class
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(5)')).toBeVisible();
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(5)')).toHaveText('06303457585');
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(6)')).toBeVisible();
-      await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(6)')).toHaveText('Nehru Nagar, Kadapa');
+      await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(6)')).toHaveText('Nehru Nagar, Kadapa, India');
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(7)')).toBeVisible();
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(7)')).toHaveText('Y.S.R. Andhra Pradesh 516002');
       await expect(this.page.locator('#myTable > tr:nth-child(3) > td:nth-child(8)')).toBeVisible();
