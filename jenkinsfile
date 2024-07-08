@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                dir(C:/Users/KHADEERUN/SampleProject) {
+                dir(SampleProject) {
                     script {
                         // Check if package.json exists
                         def packageJson = fileExists('package.json')
