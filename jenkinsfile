@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        LOCAL_DIR = 'C:/Users/KHADEERUN/.jenkins/workspace/DemoJob' // Using forward slashes
+        LOCAL_DIR = 'C:/Users/KHADEERUN/SampleProject' // Using forward slashes
     }
 
     stages {
@@ -42,7 +42,7 @@ bat 'npx playwright install'
             steps {
                 script {
                     // Copy files from workspace to local directory
-                    bat 'xcopy /s /Y "C:/Users/KHADEERUN/.jenkins/workspace/DemoJob/*" "C:\Users\KHADEERUN\SampleProject"'
+                    bat 'xcopy /s /Y "C:\\Users/KHADEERUN\\.jenkins\\workspace\\DemoJob\\*" "C:/Users/KHADEERUN/SampleProject"'
 
                 }
             }
