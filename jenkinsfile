@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        LOCAL_DIR = 'D:\\DummyProject' // Set your local directory path here
+        LOCAL_DIR = 'D:\\PlaywrightContactApp' // Set your local directory path here
     }
 
     stages {
@@ -22,17 +22,18 @@ pipeline {
             }
         }
         stage('Create Local Directory') {
-            steps {
-                powershell '''
-                $destDir = "${env.LOCAL_DIR}"
-                
-                # Create destination directory if it doesn't exist
-                if (-Not (Test-Path -Path $destDir)) {
-                    New-Item -ItemType Directory -Force -Path $destDir
-                }
-                '''
-            }
+    steps {
+        powershell '''
+        $destDir = "D:\\SampleProject"
+        
+        # Create destination directory if it doesn't exist
+        if (-Not (Test-Path -Path $destDir)) {
+            New-Item -ItemType Directory -Force -Path $destDir
         }
+        '''
+    }
+}
+
         stage('Install Dependencies') {
             steps {
                 dir('DummyProject') {
