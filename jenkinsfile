@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        LOCAL_DIR = 'C:\Users\KHADEERUN\.jenkins\workspace\DemoJob' // Set your local directory path here
+        LOCAL_DIR = 'C:/Users/KHADEERUN/.jenkins/workspace/DemoJob' // Using forward slashes
     }
 
     stages {
         stage('Cleanup') {
             steps {
                 script {
-                    def dirPath = "D:\\SampleProject"
+                    def dirPath = "${env.LOCAL_DIR}"
                     if (fileExists(dirPath)) {
                         deleteDir()
                     }
@@ -21,51 +21,34 @@ pipeline {
                 git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', credentialsId: 'MyGitHubCreds'
             }
         }
-        /*stage('Create Local Directory') {
-    steps {
-        powershell '''
-        $destDir = "D:\\SampleProject"
-        
-        # Create destination directory if it doesn't exist
-        if (-Not (Test-Path -Path $destDir)) {
-            New-Item -ItemType Directory -Force -Path $destDir
-        }
-        '''
-    }
-}
-
         stage('Install Dependencies') {
             steps {
-                dir('D:\\SampleProject') {
-                    bat 'npm install'
-bat 'npm playwright install'
-bat 'npx playwright test'
+                dir("${env.LOCAL_DIR}") {
+                    script {
+                        // Check if package.json exists
+                        def packageJson = fileExists('package.json')
+                        if (!packageJson) {
+                            error('package.json not found in ${env.LOCAL_DIR}')
+                        } else {
+                            // Install npm dependencies
+                            bat 'npm install'
+                        }
+                    }
                 }
             }
-        }*/
+        }
         stage('Copy Files to Local Directory') {
             steps {
-                powershell '''
-                $srcDir = "C:\Users\KHADEERUN\.jenkins\workspace\DemoJob"
-                $destDir = "D:\\SampleProject"
-                
-                # Copy files from workspace to local directory
-                Copy-Item -Path "C:\Users\KHADEERUN\.jenkins\workspace\DemoJob" -Destination $destDir -Recurse -Force
-                '''
-            }
-        }
-stage('Install Dependencies') {
-            steps {
-                dir('SampleProject') {
-                    bat 'npm install'
-                    bat 'npx playwright install'
+                script {
+                    // Copy files from workspace to local directory
+                    bat "xcopy /s \"${env.WORKSPACE}\\*\" \"${env.LOCAL_DIR}\""
                 }
             }
         }
         stage('Run Tests') {
             steps {
                 script {
-                    dir("D:\\SampleProject") {
+                    dir("${env.LOCAL_DIR}") {
                         bat 'dir'  // List files to ensure they are copied
                         bat 'npx playwright test' // Run Playwright tests
                     }
@@ -74,7 +57,6 @@ stage('Install Dependencies') {
         }
     }
 }
-
 
 
 
