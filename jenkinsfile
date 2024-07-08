@@ -35,12 +35,12 @@ pipeline {
                 $destDir = "${env.D:\SampleProject}"
                 
                 # Create destination directory if it doesn't exist
-                if (-Not (Test-Path -Path $destDir)) {
-                    New-Item -ItemType Directory -Force -Path $destDir
+                if (-Not (Test-Path -Path $D:\SampleProject)) {
+                    New-Item -ItemType Directory -Force -Path $SampleProject
                 }
                 
                 # Copy files from workspace to local directory
-                Copy-Item -Path "$C:\Users\KHADEERUN\.jenkins\workspace\DemoJob\*" -Destination $destDir -Recurse -Force
+                Copy-Item -Path "$C:\Users\KHADEERUN\.jenkins\workspace\DemoJob\*" -Destination $D: -Recurse -Force
                 '''
             }
         }
@@ -48,7 +48,7 @@ pipeline {
             steps {
                 script {
                     dir("${env.D:\SampleProject}") {
-                        bat 'dir'  // List files to ensure they are copied
+                        bat 'SampleProject'  // List files to ensure they are copied
                         bat 'npx playwright test' // Run Playwright tests
                     }
                 }
