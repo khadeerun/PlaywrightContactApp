@@ -38,6 +38,7 @@ pipeline {
             steps {
                 dir('SampleProject') {
                     bat 'npm install'
+bat 'npm playwright install'
 bat 'npx playwright test'
                 }
             }
