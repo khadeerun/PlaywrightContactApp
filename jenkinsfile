@@ -42,7 +42,7 @@ bat 'npx playwright install'
             steps {
                 script {
                     // Copy files from workspace to local directory
-                    bat 'xcopy /s /Y "C:\\Users\\KHADEERUN\\.jenkins\\workspace\\PipelineSmaple1\\*" "C:/Users/KHADEERUN/.jenkins/workspace/DemoJob"'
+                    bat 'xcopy /s /Y "D:\\SampleProject\\*" "C:/Users/KHADEERUN/.jenkins/workspace/DemoJob"'
 
                 }
             }
