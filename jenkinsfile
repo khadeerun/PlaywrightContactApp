@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        LOCAL_DIR = 'D:/LocalProject' // Set your local directory path here
+    }
+
     stages {
         stage('Cleanup') {
             steps {
@@ -20,19 +24,34 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 dir('PlaywrightContactApp') {
-                    sh 'npm install'
+                    bat 'npm install'
+                }
+            }
+        }
+        stage('Copy Files to Local Directory') {
+            steps {
+                script {
+                    def srcDir = "${WORKSPACE}/PlaywrightContactApp"
+                    def destDir = "${env.LOCAL_DIR}"
+                    
+                    // Create destination directory if it doesn't exist
+                   // new File(destDir).mkdirs()
+                    
+                    // Copy files from workspace to local directory
+                    bat "cp -r ${https://github.com/khadeerun/PlaywrightContactApp/tree/main.git}/* ${SampleProject}/"
                 }
             }
         }
         stage('Run Tests') {
             steps {
                 dir('PlaywrightContactApp') {
-                    sh 'npx playwright test'
+                    bat 'npx playwright test'
                 }
             }
         }
     }
 }
+
 
 
 
