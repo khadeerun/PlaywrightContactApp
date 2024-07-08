@@ -44,7 +44,7 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                dir("${env.LOCAL_DIR}") {
+                dir("${D:\SampleProject}") {
                     bat 'npx playwright test'
                 }
             }
@@ -106,6 +106,31 @@ pipeline {
                 dir('PlaywrightContactApp') {
                     bat 'npx playwright test'
                 }
+            }
+        }
+
+
+       stage('Build') {
+            steps {
+                // Install dependencies and build the project
+                script {
+                    def npmHome = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+                    env.PATH = "${npmHome}/bin:${env.PATH}"
+                }
+                bat 'npm install'
+                bat 'npm run build'
+
+
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Deploy the project
+                bat '''
+                echo "Deploying the project..."
+                xcopy .\\dist\\* \\path\\to\\deployment\\directory /E /I
+                '''
             }
         }
     }
