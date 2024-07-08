@@ -28,9 +28,36 @@ pipeline {
                         // Check if package.json exists
                         def packageJson = fileExists('package.json')
                         if (!packageJson) {
-                     
-
-
+                            error('package.json not found in ${env.LOCAL_DIR}')
+                        } else {
+                            // Install npm dependencies and Playwright
+                            bat 'npm install'
+                            bat 'npx playwright install'
+                        }
+                    }
+                }
+            }
+        }
+        stage('Copy Files to Local Directory') {
+            steps {
+                script {
+                    // Copy files from workspace to local directory
+                    bat 'xcopy /s /Y "C:\\Users\\KHADEERUN\\.jenkins\\workspace\\DemoJob\\*" "C:/Users/KHADEERUN/SampleProject"'
+                }
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                script {
+                    dir("${env.LOCAL_DIR}") {
+                        bat 'dir'  // List files to ensure they are copied
+                        bat 'npx playwright test' // Run Playwright tests
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 
