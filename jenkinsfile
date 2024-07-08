@@ -1,6 +1,50 @@
 pipeline {
     agent any
 
+    stages {
+        stage('Cleanup') {
+            steps {
+                script {
+                    def dirPath = "${WORKSPACE}/PlaywrightContactApp"
+                    if (fileExists(dirPath)) {
+                        deleteDir()
+                    }
+                }
+            }
+        }
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', credentialsId: 'MyGitHubCreds'
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                dir('PlaywrightContactApp') {
+                    sh 'npm install'
+                }
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                dir('PlaywrightContactApp') {
+                    sh 'npx playwright test'
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+/*pipeline {
+    agent any
+
     environment {
         NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation' // Ensure this matches the name you provided in Jenkins Node.js configuration
         PATH = "${NODEJS_HOME}/bin:${env.PATH}"
@@ -71,4 +115,4 @@ pipeline {
             echo 'Build or deployment failed!'
         }
     }
-}
+}*/
