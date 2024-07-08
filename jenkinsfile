@@ -38,7 +38,7 @@ pipeline {
                    // new File(destDir).mkdirs()
                     
                     // Copy files from workspace to local directory
-                    bat "cp -r ${https://github.com/khadeerun/PlaywrightContactApp/tree/main.git}/* ${SampleProject}/"
+                    bat "cp -r ${C:\Users\KHADEERUN\.jenkins\workspace\DemoJob}/* ${SampleProject}/"
                 }
             }
         }
