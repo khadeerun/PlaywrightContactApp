@@ -2,15 +2,15 @@ pipeline {
     agent any
 
     environment {
-        LOCAL_DIR = 'D:/SampleProject' // Set your local directory path here
+        LOCAL_DIR = 'D:' // Set your local directory path here
     }
 
     stages {
         stage('Cleanup') {
             steps {
                 script {
-                    def dirPath = "${WORKSPACE}/PlaywrightContactApp"
-                    if (fileExists(D:\SampleProject) {
+                    def dirPath = "$D:\PlaywrightContactApp"
+                    if (fileExists(dirPath)) {
                         deleteDir()
                     }
                 }
@@ -19,6 +19,18 @@ pipeline {
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', credentialsId: 'MyGitHubCreds'
+            }
+        }
+        stage('Create Local Directory') {
+            steps {
+                powershell '''
+                $destDir = "${env.D:}"
+                
+                # Create destination directory if it doesn't exist
+                if (-Not (Test-Path -Path $DummyProject)) {
+                    New-Item -ItemType Directory -Force -Path $D:\DummyProject
+                }
+                '''
             }
         }
         stage('Install Dependencies') {
@@ -32,23 +44,18 @@ pipeline {
             steps {
                 powershell '''
                 $srcDir = "${env.WORKSPACE}\\PlaywrightContactApp"
-                $destDir = "${env.D:\SampleProject}"
-                
-                # Create destination directory if it doesn't exist
-                if (-Not (Test-Path -Path $D:\SampleProject)) {
-                    New-Item -ItemType Directory -Force -Path $SampleProject
-                }
+                $destDir = "${env.D:\DummyProject}"
                 
                 # Copy files from workspace to local directory
-                Copy-Item -Path "$C:\Users\KHADEERUN\.jenkins\workspace\DemoJob\*" -Destination $D: -Recurse -Force
+                Copy-Item -Path "$D:\PlaywrightContactApp\\*" -Destination $destDir -Recurse -Force
                 '''
             }
         }
         stage('Run Tests') {
             steps {
                 script {
-                    dir("${env.D:\SampleProject}") {
-                        bat 'SampleProject'  // List files to ensure they are copied
+                    dir("${env.D:\DummyProject}") {
+                        bat 'dir'  // List files to ensure they are copied
                         bat 'npx playwright test' // Run Playwright tests
                     }
                 }
@@ -56,6 +63,7 @@ pipeline {
         }
     }
 }
+
 
 
 
