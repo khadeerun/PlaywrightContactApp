@@ -58,7 +58,7 @@ stage('Install Dependencies') {
             steps {
                 dir('SampleProject') {
                     bat 'npm install'
-bat 'npx playwright test'
+                    bat 'npx playwright install'
                 }
             }
         }
