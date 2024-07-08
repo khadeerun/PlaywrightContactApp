@@ -2,6 +2,65 @@ pipeline {
     agent any
 
     environment {
+        LOCAL_DIR = 'D:/SampleProject' // Set your local directory path here
+    }
+
+    stages {
+        stage('Cleanup') {
+            steps {
+                script {
+                    def dirPath = "${WORKSPACE}/PlaywrightContactApp"
+                    if (fileExists(D:\SampleProject)) {
+                        deleteDir()
+                    }
+                }
+            }
+        }
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', credentialsId: 'MyGitHubCreds'
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                dir('PlaywrightContactApp') {
+                    bat 'npm install'
+                }
+            }
+        }
+        stage('Copy Files to Local Directory') {
+            steps {
+                script {
+                    def srcDir = "${WORKSPACE}/PlaywrightContactApp"
+                    def destDir = "${D:}"
+                    
+                    // Create destination directory if it doesn't exist
+                    new File(SampleProject).mkdirs()
+                    
+                    // Copy files from workspace to local directory
+                    bat "xcopy ${C:\Users\KHADEERUN\.jenkins\workspace\DemoJob} ${SampleProject} /E /H /C /I"
+                }
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                dir("${env.LOCAL_DIR}") {
+                    bat 'npx playwright test'
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+/*pipeline {
+    agent any
+
+    environment {
         LOCAL_DIR = 'D:/LocalProject' // Set your local directory path here
     }
 
@@ -61,7 +120,7 @@ pipeline {
 
 
 
-/*pipeline {
+pipeline {
     agent any
 
     environment {
