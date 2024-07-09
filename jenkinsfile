@@ -59,7 +59,7 @@ pipeline {
                 // Install dependencies and build the project
                 script {
                     def npmHome = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
-                    env.PATH = "${npmHome}/bin:${C:/Users/KHADEERUN/SampleProject/node_modules/.bin}"
+                    env.PATH = "${npmHome}/bin:${env.PATH}"
                 }
                 bat 'npm install'
                 bat 'npm run build'
