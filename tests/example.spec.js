@@ -4,7 +4,7 @@ const { Details } = require('../pageObject/playwrighttest.ts');
 
 
 test.describe('To Group', () => {
-test('SignUp Page', async ({ page }) => {
+test.only('SignUp Page', async ({ page }) => {
 const obj = new Details(page);
 await obj.openBrowser();
 await obj.SignUp();
