@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                     // Copy files from workspace to local directory
-                    bat 'xcopy /s /Y "C:\\Users\\KHADEERUN\\.jenkins\\workspace\\MyPipelineJavascript\\*" "C:/Users/KHADEERUN/SampleProject"'
+                    bat 'xcopy /s /Y "C:\\Users\\KHADEERUN\Downloads\\PlaywrightContactApp\\*" "C:/Users/KHADEERUN/SampleProject"'
                 }
             }
         }
