@@ -1,10 +1,8 @@
-
-
 pipeline {
     agent any
 
     environment {
-        LOCAL_DIR = 'C:/Users/KHADEERUN/SampleProject' // Using forward slashes
+        LOCAL_DIR = 'C:\\Users\\KHADEERUN\\SampleProject'
     }
 
     stages {
@@ -38,7 +36,7 @@ pipeline {
             steps {
                 script {
                     // Copy files from workspace to local directory
-                    bat 'xcopy /s /Y "C:\\Users\\KHADEERUN\Downloads\PlaywrightContactApp\*" "C:/Users/KHADEERUN/SampleProject"'
+                    bat 'xcopy /s /Y "C:\\Users\\KHADEERUN\\Downloads\\PlaywrightContactApp\\*" "C:\\Users\\KHADEERUN\\SampleProject"'
                 }
             }
         }
@@ -54,7 +52,7 @@ pipeline {
             }
         }
 
-  stage('Build') {
+        stage('Build') {
             steps {
                 // Install dependencies and build the project
                 script {
@@ -63,8 +61,6 @@ pipeline {
                 }
                 bat 'npm install'
                 bat 'npm run build'
-
-
             }
         }
 
@@ -79,6 +75,7 @@ pipeline {
         }
     }
 }
+
 
 
 
