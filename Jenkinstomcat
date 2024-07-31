@@ -4,13 +4,15 @@ pipeline {
     environment {
         NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation' // Ensure this matches the name you provided in Jenkins Node.js configuration
         PATH = "${NODEJS_HOME}/bin:${env.PATH}"
+        GIT_CREDENTIALS = 'MyGitHubCreds' // ID of your Git credentials
+        TOMCAT_CREDENTIALS = 'tomcatcredentialshub' // ID of your Tomcat credentials
     }
 
     stages {
         stage('Checkout') {
             steps {
                 // Correct Git repository URL
-                git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main'
+                git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', credentialsId: "${env.GIT_CREDENTIALS}"
             }
         }
 
@@ -23,7 +25,7 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Run Playwright Test') {
             steps {
                 // Run tests
                     //bat 'export DISPLAY=:99'
@@ -54,9 +56,9 @@ pipeline {
 
         stage('Deploy to Tomcat') {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://localhost:9090')],
+                deploy adapters: [tomcat9(credentialsId: 'tomcatcredentialshub', path: '', url: 'http://localhost:9090')],
                        contextPath: 'ContactApp',
-                       war: '**/myapp.war'
+                       war: '**/ContactApp.war'
             }
         }
     }
