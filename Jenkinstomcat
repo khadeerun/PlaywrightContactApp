@@ -1,0 +1,70 @@
+pipeline {
+    agent any
+
+    environment {
+        NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation' // Ensure this matches the name you provided in Jenkins Node.js configuration
+        PATH = "${NODEJS_HOME}/bin:${env.PATH}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Correct Git repository URL
+                git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // Install project dependencies
+                bat 'npm install'
+                bat 'npx playwright install'
+                
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Run tests
+                    //bat 'export DISPLAY=:99'
+                    //bat 'Xvfb :99 -screen 0 1280x1024x24 &'
+        bat 'npx playwright test --headed'
+            }
+        }
+
+       stage('Build') {
+            steps {
+                // Install dependencies and build the project
+                script {
+                    def npmHome = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+                    env.PATH = "${npmHome}/bin:${env.PATH}"
+                }
+                //bat 'npm install'
+                bat 'npm run build'
+
+
+            }
+        }
+
+        stage('Package') {
+            steps {
+                bat 'jar -cvf myapp.war -C build/ .'
+            }
+        }
+
+        stage('Deploy to Tomcat') {
+            steps {
+                deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://localhost:9090')],
+                       contextPath: 'ContactApp',
+                       war: '**/myapp.war'
+            }
+        }
+    }
+
+    post {
+        always {
+            junit 'playwright-report.xml'
+            archiveArtifacts artifacts: '**/target/*.war', allowEmptyArchive: true
+        }
+    }
+}
