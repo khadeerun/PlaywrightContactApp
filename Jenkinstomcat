@@ -5,7 +5,10 @@ pipeline {
         NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation' // Ensure this matches the name you provided in Jenkins Node.js configuration
         PATH = "${NODEJS_HOME}/bin:${env.PATH}"
         GIT_CREDENTIALS = 'MyGitHubCreds' // ID of your Git credentials
-        TOMCAT_CREDENTIALS = 'tomcatcredentialshub' // ID of your Tomcat credentials
+        TOMCAT_USER = 'admin'
+        TOMCAT_PASS = 'admin123'
+        TOMCAT_URL = 'http://localhost:9090/manager/html'
+       // TOMCAT_CREDENTIALS = 'tomcatcredentialshub' // ID of your Tomcat credentials
     }
 
     stages {
@@ -69,9 +72,9 @@ pipeline {
                     def warFile = 'C:/Users/KHADEERUN/Downloads/myapp.war'
                     def contextPath = 'myapp'
 
-                    // Use the Deploy to Container plugin
+                   // Use the Deploy to Container plugin
                     deploy adapters: [tomcat9(
-                        credentialsId: 'tomcatcredentialshub', 
+                        credentialsId: 'tomcat-credentials', 
                         url: "${env.TOMCAT_URL}", 
                         path: "${contextPath}"
                     )], contextPath: "${contextPath}", war: "${warFile}"
