@@ -4,9 +4,9 @@ pipeline {
     environment {
         NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
         PATH = "${NODEJS_HOME}/bin:${env.PATH}"
-        GIT_CREDENTIALS = 'MyGitHubCreds'
-        TOMCAT_CREDENTIALS = 'tomcatcredentialshub'
-        TOMCAT_URL = 'http://localhost:9090/manager/text'
+        GIT_CREDENTIALS = 'MyGitHubCreds'  // Your Git credentials ID
+        TOMCAT_CREDENTIALS = 'tomcatcredentialshub'  // Your Tomcat credentials ID
+        TOMCAT_URL = 'http://localhost:9090/manager/text'  // Tomcat Manager URL
     }
 
     stages {
@@ -48,14 +48,6 @@ pipeline {
                     } else {
                         error "Build directory '${buildDir}' does not exist"
                     }
-                }
-            }
-        }
-
-        stage('Verify WAR File') {
-            steps {
-                script {
-                    bat "dir ${env.WORKSPACE}"
                 }
             }
         }
