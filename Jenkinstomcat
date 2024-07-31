@@ -48,11 +48,20 @@ pipeline {
             }
         }
 
-        stage('Package') {
+      stage('Package') {
             steps {
-                bat 'jar -cvf myapp.war -C build/ .'
+                // Update the path according to your actual build output directory
+                script {
+                    def buildDir = 'dist/' // Change to your actual build output directory
+                    if (fileExists(buildDir)) {
+                        bat "jar -cvf myapp.war -C ${buildDir} ."
+                    } else {
+                        error "Build directory '${buildDir}' does not exist"
+                    }
+                }
             }
         }
+
 
         stage('Deploy to Tomcat') {
             steps {
