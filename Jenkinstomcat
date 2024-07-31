@@ -44,7 +44,7 @@ pipeline {
                 script {
                     def buildDir = 'dist/'
                     if (fileExists(buildDir)) {
-                        bat "jar -cvf C:\\Users\\KHADEERUN\\Downloads\\myapp.war -C ${buildDir} ."
+                        bat "jar -cvf ${env.WORKSPACE}\\myapp.war -C ${buildDir} ."
                     } else {
                         error "Build directory '${buildDir}' does not exist"
                     }
@@ -55,7 +55,7 @@ pipeline {
         stage('Verify WAR File') {
             steps {
                 script {
-                    bat 'dir C:\\Users\\KHADEERUN\\Downloads'
+                    bat "dir ${env.WORKSPACE}"
                 }
             }
         }
@@ -63,14 +63,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    def warFile = 'C:\\Users\\KHADEERUN\\Downloads\\myapp.war'
+                    def warFile = "${env.WORKSPACE}\\myapp.war"
                     def contextPath = 'myapp'
 
                     deploy adapters: [tomcat9(
                         credentialsId: "${env.TOMCAT_CREDENTIALS}",
                         url: "${env.TOMCAT_URL}",
                         path: ""
-                    )], contextPath: "${contextPath}", war: "${warFile}"
+                    )], contextPath: "${contextPath}", war: "**/myapp.war"
                 }
             }
         }
@@ -79,8 +79,7 @@ pipeline {
     post {
         always {
             junit 'playwright-report.xml'
-            archiveArtifacts artifacts: 'C:\\Users\\KHADEERUN\\Downloads\\myapp.war', allowEmptyArchive: true
+            archiveArtifacts artifacts: '**/myapp.war', allowEmptyArchive: true
         }
     }
 }
-
