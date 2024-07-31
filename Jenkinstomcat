@@ -6,7 +6,7 @@ pipeline {
         PATH = "${NODEJS_HOME}/bin:${env.PATH}"
         GIT_CREDENTIALS = 'MyGitHubCreds'  // Your Git credentials ID
         TOMCAT_CREDENTIALS = 'tomcatcredentialshub'  // Your Tomcat credentials ID
-        TOMCAT_URL = 'http://localhost:9090/manager/text'  // Tomcat Manager URL 
+        TOMCAT_URL = 'http://localhost:9090/manager/text'  // Tomcat Manager URL
     }
 
     stages {
@@ -41,13 +41,13 @@ pipeline {
                 }
             }
         }
-       
+
         stage('Deploy') {
             steps {
                 withCredentials([usernamePassword(credentialsId: "${env.TOMCAT_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     script {
                         bat """
-                        curl -u %USERNAME%:%PASSWORD% -T ${env.WORKSPACE}\\myapp.war ${env.TOMCAT_URL}/deploy?path=/myapp&update=true
+                        curl -u %USERNAME%:%PASSWORD% -T "${env.WORKSPACE}\\myapp.war" "${env.TOMCAT_URL}/deploy?path=/myapp&update=true"
                         """
                     }
                 }
@@ -58,7 +58,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '**/myapp.war', allowEmptyArchive: true
-            junit '**/test-results/*.xml'
+            junit '**/test-results/results.xml'
         }
     }
 }
