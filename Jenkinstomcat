@@ -25,7 +25,7 @@ pipeline {
 
         stage('Run Playwright Test') {
             steps {
-                bat 'npx playwright test --headed'
+                bat 'npx playwright test'
             }
         }
 
