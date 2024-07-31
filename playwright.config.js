@@ -70,12 +70,6 @@ module.exports = defineConfig({
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
   ],
-const config = {
-  reporter: [['junit', { outputFile: 'test-results/results.xml' }]],
-  // other configurations
-};
-
-module.exports = config;
 
   /* Run your local dev server before starting the tests */
   // webServer: {
@@ -83,5 +77,12 @@ module.exports = config;
   //   url: 'http://127.0.0.1:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
-});
 
+  const config = {
+  reporter: [['junit', { outputFile: 'test-results/results.xml' }]],
+  // other configurations
+};
+
+
+});
+module.exports = config;
