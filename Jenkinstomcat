@@ -13,7 +13,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git credentialsId: 'MyGitHubCreds', url: 'https://github.com/khadeerun/PlaywrightContactApp.git'
+                // Correct Git repository URL
+                git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main'
             }
         }
 
