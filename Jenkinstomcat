@@ -14,7 +14,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Correct Git repository URL
-                git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main'
+                git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', ${env.GIT_CREDENTIALS}
             }
         }
 
