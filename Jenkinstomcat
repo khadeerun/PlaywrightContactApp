@@ -8,7 +8,7 @@ pipeline {
         TOMCAT_USER = 'admin'
         TOMCAT_PASS = 'admin123'
         TOMCAT_URL = 'http://localhost:9090/manager/html'
-       // TOMCAT_CREDENTIALS = 'tomcatcredentialshub' // ID of your Tomcat credentials
+       TOMCAT_CREDENTIALS = 'tomcatcredentialshub' // ID of your Tomcat credentials
     }
 
     stages {
@@ -74,7 +74,7 @@ pipeline {
 
                    // Use the Deploy to Container plugin
                     deploy adapters: [tomcat9(
-                        credentialsId: 'tomcat-credentials', 
+                        credentialsId: '${env.TOMCAT_CREDENTIALS}', 
                         url: "${env.TOMCAT_URL}", 
                         path: "${contextPath}"
                     )], contextPath: "${contextPath}", war: "${warFile}"
