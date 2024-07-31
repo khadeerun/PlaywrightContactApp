@@ -9,12 +9,10 @@ pipeline {
         TOMCAT_URL = 'http://localhost:9090/manager/text'  // Tomcat Manager URL
     }
 
-
     stages {
         stage('Checkout') {
             steps {
-                // Correct Git repository URL
-                git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', ${env.GIT_CREDENTIALS}
+                git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', credentialsId: "${env.GIT_CREDENTIALS}"
             }
         }
 
@@ -54,10 +52,12 @@ pipeline {
             }
         }
 
-       stage('Deploy') {
+        stage('Deploy') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'MyTomcatCreds', usernameVariable: 'admin', passwordVariable: 'admin123')]) {
-                    deploy adapters: [tomcat9(credentialsId: 'tomcatcredentialshub', url: 'http://your-tomcat-url')], contextPath: 'myapp', war: 'myapp.war'
+                withCredentials([usernamePassword(credentialsId: "${env.TOMCAT_CREDENTIALS}", usernameVariable: 'TOMCAT_USER', passwordVariable: 'TOMCAT_PASSWORD')]) {
+                    bat """
+                    curl --upload-file myapp.war "http://${env.TOMCAT_USER}:${TOMCAT_PASSWORD}@${env.TOMCAT_URL}/manager/text/deploy?path=/myapp&update=true"
+                    """
                 }
             }
         }
@@ -65,7 +65,7 @@ pipeline {
 
     post {
         always {
-           archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive: true
             junit 'playwright-report/**/*.xml' 
         }
     }
