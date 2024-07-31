@@ -79,10 +79,10 @@ pipeline {
     }
 
 
-    post {
+post {
         always {
             junit 'playwright-report.xml'
-            archiveArtifacts artifacts: '**/target/*.war', allowEmptyArchive: true
+            archiveArtifacts artifacts: '**/myapp.war', allowEmptyArchive: true
         }
     }
 }
