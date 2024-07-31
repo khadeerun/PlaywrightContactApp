@@ -29,16 +29,7 @@ pipeline {
             }
         }
 
-         stages {
         stage('Build') {
-            steps {
-                script {
-                    bat 'jar -cvf C:\\Users\\KHADEERUN\\.jenkins\\workspace\\DeployTomcat\\myapp.war -C dist/ .'
-                }
-            }
-        }
-       
-        stage('Package') {
             steps {
                 script {
                     def buildDir = 'dist/'
@@ -50,15 +41,13 @@ pipeline {
                 }
             }
         }
-
-         stage('Deploy') {
+       
+        stage('Deploy') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'tomcatcredentialshub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: "${env.TOMCAT_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     script {
                         bat """
-                        curl --upload-file C:\\Users\\KHADEERUN\\.jenkins\\workspace\\DeployTomcat\\myapp.war \
-                        --user $USERNAME:$PASSWORD \
-                        http://<your-tomcat-server>:8080/manager/text/deploy?path=/myapp&update=true
+                        curl -u %USERNAME%:%PASSWORD% -T ${env.WORKSPACE}\\myapp.war ${env.TOMCAT_URL}/deploy?path=/myapp&update=true
                         """
                     }
                 }
@@ -72,5 +61,4 @@ pipeline {
             junit '**/test-results/*.xml'
         }
     }
-}
 }
