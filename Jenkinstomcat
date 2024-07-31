@@ -6,7 +6,7 @@ pipeline {
         PATH = "${NODEJS_HOME}/bin:${env.PATH}"
         GIT_CREDENTIALS = 'MyGitHubCreds'  // Your Git credentials ID
         TOMCAT_CREDENTIALS = 'tomcatcredentialshub'  // Your Tomcat credentials ID
-        TOMCAT_URL = 'http://localhost:9090/manager/text'  // Tomcat Manager URL
+        TOMCAT_URL = 'http://localhost:9090/manager/text'  // Tomcat Manager URL 
     }
 
     stages {
