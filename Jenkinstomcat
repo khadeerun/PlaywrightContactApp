@@ -52,10 +52,18 @@ pipeline {
             }
         }
 
+        stage('Verify WAR File') {
+            steps {
+                script {
+                    sh 'ls -l target'
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
                 script {
-                    def warFile = 'C:/Users/KHADEERUN/.jenkins/workspace/DeployTomcatmyapp.war'
+                    def warFile = 'target/myapp.war'
                     def contextPath = 'myapp'
 
                     deploy adapters: [tomcat9(
