@@ -63,14 +63,21 @@ pipeline {
         }
 
 
-        stage('Deploy to Tomcat') {
+    stage('Deploy to Tomcat') {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'tomcatcredentialshub', path: '', url: 'http://localhost:9090')],
-                       contextPath: 'myapp',
-                       war: '**/myapp.war'
+                script {
+                    deploy adapters: [
+                        tomcat9(
+                            credentialsId: "${env.TOMCAT_CREDENTIALS}",
+                            path: '',
+                            url: 'http://localhost:9090'
+                        )
+                    ], contextPath: 'myapp', war: '**/myapp.war'
+                }
             }
         }
     }
+
 
     post {
         always {
