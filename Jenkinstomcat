@@ -63,20 +63,23 @@ pipeline {
         }
 
 
-    stage('Deploy to Tomcat') {
+    stage('Deploy') {
             steps {
                 script {
-                    deploy adapters: [
-                        tomcat9(
-                            credentialsId: "${env.TOMCAT_CREDENTIALS}",
-                            path: 'C:/Users/KHADEERUN/Downloads',
-                            url: 'http://localhost:9090/manager/html'
-                        )
-                    ], contextPath: 'myapp', war: '**/myapp.war'
+                    def warFile = 'target/my.war'
+                    def contextPath = 'myapp'
+
+                    // Use the Deploy to Container plugin
+                    deploy adapters: [tomcat9(
+                        credentialsId: 'tomcatcredentialshub', 
+                        url: "${env.TOMCAT_URL}", 
+                        path: "${contextPath}"
+                    )], contextPath: "${contextPath}", war: "${warFile}"
                 }
             }
         }
     }
+}
 
 
 post {
