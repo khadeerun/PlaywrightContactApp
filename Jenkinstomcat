@@ -2,60 +2,47 @@ pipeline {
     agent any
 
     environment {
-        NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation' // Ensure this matches the name you provided in Jenkins Node.js configuration
+        NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
         PATH = "${NODEJS_HOME}/bin:${env.PATH}"
-        GIT_CREDENTIALS = 'MyGitHubCreds' // ID of your Git credentials
-        TOMCAT_USER = 'admin'
-        TOMCAT_PASS = 'admin123'
-        TOMCAT_URL = 'http://localhost:9090/manager/html'
-       TOMCAT_CREDENTIALS = 'tomcatcredentialshub' // ID of your Tomcat credentials
+        GIT_CREDENTIALS = 'MyGitHubCreds'
+        TOMCAT_CREDENTIALS = 'tomcatcredentialshub'
+        TOMCAT_URL = 'http://localhost:9090/manager/text'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Correct Git repository URL
                 git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', credentialsId: "${env.GIT_CREDENTIALS}"
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                // Install project dependencies
                 bat 'npm install'
                 bat 'npx playwright install'
-                
             }
         }
 
         stage('Run Playwright Test') {
             steps {
-                // Run tests
-                    //bat 'export DISPLAY=:99'
-                    //bat 'Xvfb :99 -screen 0 1280x1024x24 &'
-        bat 'npx playwright test --headed'
+                bat 'npx playwright test --headed'
             }
         }
 
-       stage('Build') {
+        stage('Build') {
             steps {
-                // Install dependencies and build the project
                 script {
                     def npmHome = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                     env.PATH = "${npmHome}/bin:${env.PATH}"
                 }
-                //bat 'npm install'
                 bat 'npm run build'
-
-
             }
         }
 
-      stage('Package') {
+        stage('Package') {
             steps {
-                // Update the path according to your actual build output directory
                 script {
-                    def buildDir = 'dist/' // Change to your actual build output directory
+                    def buildDir = 'dist/'
                     if (fileExists(buildDir)) {
                         bat "jar -cvf myapp.war -C ${buildDir} ."
                     } else {
@@ -65,27 +52,23 @@ pipeline {
             }
         }
 
-
-    stage('Deploy') {
+        stage('Deploy') {
             steps {
                 script {
                     def warFile = 'C:/Users/KHADEERUN/Downloads/myapp.war'
                     def contextPath = 'myapp'
 
-                   // Use the Deploy to Container plugin
                     deploy adapters: [tomcat9(
-                        credentialsId: '${env.TOMCAT_CREDENTIALS}', 
-                        url: "${env.TOMCAT_URL}", 
+                        credentialsId: "${env.TOMCAT_CREDENTIALS}",
+                        url: "${env.TOMCAT_URL}",
                         path: "${contextPath}"
                     )], contextPath: "${contextPath}", war: "${warFile}"
                 }
             }
         }
     }
-}
 
-
-post {
+    post {
         always {
             junit 'playwright-report.xml'
             archiveArtifacts artifacts: '**/myapp.war', allowEmptyArchive: true
