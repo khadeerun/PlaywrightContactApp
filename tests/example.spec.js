@@ -47,7 +47,7 @@ test('EditContact', async ({ page }) => {
  
 
 
-test.only('Delete', async ({ page }) => {
+test('Delete', async ({ page }) => {
   const obj = new Details(page);
  await obj.openBrowser();
  
