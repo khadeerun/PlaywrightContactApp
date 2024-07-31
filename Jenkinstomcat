@@ -55,7 +55,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    def warFile = 'C:/Users/KHADEERUN/Downloads/myapp.war'
+                    def warFile = 'C:/Users/KHADEERUN/.jenkins/workspace/DeployTomcatmyapp.war'
                     def contextPath = 'myapp'
 
                     deploy adapters: [tomcat9(
