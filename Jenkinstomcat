@@ -33,7 +33,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh 'jar -cvf C:\\Users\\KHADEERUN\\.jenkins\\workspace\\DeployTomcat\\myapp.war -C dist/ .'
+                    bat 'jar -cvf C:\\Users\\KHADEERUN\\.jenkins\\workspace\\DeployTomcat\\myapp.war -C dist/ .'
                 }
             }
         }
@@ -55,7 +55,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'tomcatcredentialshub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     script {
-                        sh """
+                        bat """
                         curl --upload-file C:\\Users\\KHADEERUN\\.jenkins\\workspace\\DeployTomcat\\myapp.war \
                         --user $USERNAME:$PASSWORD \
                         http://<your-tomcat-server>:8080/manager/text/deploy?path=/myapp&update=true
