@@ -21,11 +21,11 @@ module.exports = defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [['junit', { outputFile: 'test-results/results.xml' }], 'html'],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    headless:true, 
-    //args: ['--display=:99']
+    headless: true,
+    // args: ['--display=:99']
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
@@ -36,7 +36,7 @@ module.exports = defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium', 
+      name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
 
@@ -77,12 +77,4 @@ module.exports = defineConfig({
   //   url: 'http://127.0.0.1:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
-
-  const config = {
-  reporter: [['junit', { outputFile: 'test-results/results.xml' }]],
-  // other configurations
-};
-
-
 });
-module.exports = config;
