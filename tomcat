@@ -31,27 +31,57 @@ pipeline {
             }
         }
 
-        stage('Build WAR') {
+        stage('Build Application') {
             steps {
-                bat 'npm run build' // Assuming you have a build script to create WAR
-                echo "Listing contents of target directory after build:"
-                bat 'dir C:\\Users\\KHADEERUN\\.jenkins\\workspace\\TomcatDeployDemo\\target'
+                bat 'npm run build' // Ensure this builds static files if needed
+            }
+        }
+
+        stage('Package WAR') {
+            steps {
+                script {
+                    // Ensure the target directory exists
+                    bat 'mkdir target'
+                    
+                    // Create a temporary directory for WAR file structure
+                    bat 'mkdir temp'
+                    
+                    // Copy your Node.js application files into the temp directory
+                    bat 'xcopy /s /e /y .\\src\\* temp\\'
+                    
+                    // Create a WEB-INF directory and an empty web.xml file
+                    bat 'mkdir temp\\WEB-INF'
+                    bat 'echo > temp\\WEB-INF\\web.xml'
+                    
+                    // Package the temp directory into a WAR file
+                    bat 'jar -cvf target\\myapp.war -C temp .'
+                    
+                    // Clean up temporary directory
+                    bat 'rmdir /s /q temp'
+                }
+            }
+        }
+
+        stage('Verify WAR File') {
+            steps {
+                script {
+                    if (fileExists(env.WAR_FILE_PATH)) {
+                        echo "WAR file found. Proceeding with deployment."
+                    } else {
+                        echo "WAR file not found: ${env.WAR_FILE_PATH}"
+                        error("Deployment aborted due to missing WAR file.")
+                    }
+                }
             }
         }
 
         stage('Deploy to Tomcat') {
             steps {
                 script {
-                    if (fileExists(env.WAR_FILE_PATH)) {
-                        echo "WAR file found. Proceeding with deployment."
-                        withCredentials([usernamePassword(credentialsId: "${env.TOMCAT_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                            bat """
-                                curl -u %USERNAME%:%PASSWORD% -T "${env.WAR_FILE_PATH}" "${env.TOMCAT_URL}/deploy?path=${env.DEPLOY_PATH}&update=true"
-                            """
-                        }
-                    } else {
-                        echo "WAR file not found: ${env.WAR_FILE_PATH}"
-                        error("Deployment aborted due to missing WAR file.")
+                    withCredentials([usernamePassword(credentialsId: "${env.TOMCAT_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        bat """
+                            curl -u %USERNAME%:%PASSWORD% -T "${env.WAR_FILE_PATH}" "${env.TOMCAT_URL}/deploy?path=${env.DEPLOY_PATH}&update=true"
+                        """
                     }
                 }
             }
