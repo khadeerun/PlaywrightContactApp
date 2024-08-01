@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+
+    environment {
+        GITHUB_CREDENTIALS_ID = 'MyGitHubCreds'
+        TOMCAT_CREDENTIALS_ID = 'tomcatcredentialshub'
+        TOMCAT_URL = 'http://your-tomcat-server:9090/manager/text'
+        DEPLOY_PATH = '/myapp'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git credentialsId: "${GITHUB_CREDENTIALS_ID}", url: 'https://github.com/khadeerun/PlaywrightContactApp/tree/main'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    bat 'npm install'
+                }
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                script {
+                    bat 'npx playwright test'
+                }
+            }
+        }
+
+        stage('Build WAR') {
+            steps {
+                script {
+                    bat 'npm run build' // Assuming you have a build script to create WAR
+                }
+            }
+        }
+
+        stage('Deploy to Tomcat') {
+            steps {
+                script {
+                    bat "curl -u admin:${TOMCAT_CREDENTIALS_ID} -T 'C:\Users\KHADEERUN\Downloads\apache-tomcat-10.1.26-windows-x64\apache-tomcat-10.1.26\webapps\myapp' '${TOMCAT_URL}/deploy?path=${DEPLOY_PATH}&update=true'"
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment Successful!'
+        }
+        failure {
+            echo 'Deployment Failed!'
+        }
+    }
+}
