@@ -40,14 +40,7 @@ pipeline {
 
        stage('Deploy') {
             steps {
-                withCredentials([usernamePassword(credentialsId: "${env.TOMCAT_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    script {
-                        def deployURL = "${env.TOMCAT_URL}/deploy?path=/myapp&update=true"
-                        bat """
-                        curl -u %USERNAME%:%PASSWORD% -T "${env.WORKSPACE}\\myapp.war" "${deployURL}"
-                        """
-                    }
-                }
+                deploy adapters: [tomcat9(credentialsId: 'tomcatcredentialshub', path: '', url: 'http://localhost:9090/manager/html')], contextPath: 'myapp', war: '**/*.war'
             }
         }
     }
