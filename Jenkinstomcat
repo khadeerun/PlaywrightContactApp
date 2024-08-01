@@ -43,7 +43,7 @@ pipeline {
                 deploy adapters: [tomcat9(credentialsId: 'tomcatcredentialshub', path: '', url: 'http://localhost:9090/manager/html')], contextPath: 'myapp', war: '**/*.war'
             }
         }
-    }
+    
 
     post {
         always {
