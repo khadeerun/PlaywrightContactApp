@@ -34,7 +34,7 @@ pipeline {
         stage('Build WAR') {
             steps {
                 bat 'npm run build' // Assuming you have a build script to create WAR
-                // Add logging to check the contents of the target directory
+                echo "Listing contents of target directory after build:"
                 bat 'dir C:\\Users\\KHADEERUN\\.jenkins\\workspace\\TomcatDeployDemo\\target'
             }
         }
