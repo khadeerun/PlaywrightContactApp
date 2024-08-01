@@ -13,7 +13,14 @@ NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSIns
     stages {
         stage('Checkout') {
             steps {
-                git credentialsId: "${GITHUB_CREDENTIALS_ID}", url: 'https://github.com/khadeerun/PlaywrightContactApp/tree/main'
+                git url: 'https://github.com/khadeerun/PlaywrightContactApp.git', branch: 'main', credentialsId: "${env.GIT_CREDENTIALS}"
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'npm install'
+                bat 'npx playwright install'
             }
         }
 
