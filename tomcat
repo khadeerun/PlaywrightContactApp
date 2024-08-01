@@ -2,6 +2,8 @@ pipeline {
     agent any
 
     environment {
+NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+        PATH = "${NODEJS_HOME}/bin:${env.PATH}"
         GITHUB_CREDENTIALS_ID = 'MyGitHubCreds'
         TOMCAT_CREDENTIALS_ID = 'tomcatcredentialshub'
         TOMCAT_URL = 'http://your-tomcat-server:9090/manager/text'
