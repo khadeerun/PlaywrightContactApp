@@ -38,12 +38,13 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+       stage('Deploy') {
             steps {
                 withCredentials([usernamePassword(credentialsId: "${env.TOMCAT_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     script {
+                        def deployURL = "${env.TOMCAT_URL}/deploy?path=/myapp&update=true"
                         bat """
-                        curl -u %USERNAME%:%PASSWORD% -T "${env.WORKSPACE}\\myapp.war" "${env.TOMCAT_URL}/deploy?path=/myapp&update=true"
+                        curl -u %USERNAME%:%PASSWORD% -T "${env.WORKSPACE}\\myapp.war" "${deployURL}"
                         """
                     }
                 }
