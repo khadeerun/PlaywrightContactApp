@@ -4,9 +4,9 @@ pipeline {
     environment {
         NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
         PATH = "${NODEJS_HOME}/bin:${env.PATH}"
-        GIT_CREDENTIALS = 'MyGitHubCreds'  // Your Git credentials ID
-        TOMCAT_CREDENTIALS = 'tomcatcredentialshub'  // Your Tomcat credentials ID
-        TOMCAT_URL = 'http://your-tomcat-server:9090/manager/text'  // Tomcat Manager URL
+        GIT_CREDENTIALS = 'MyGitHubCreds'
+        TOMCAT_CREDENTIALS = 'tomcatcredentialshub'
+        TOMCAT_URL = 'http://your-tomcat-server:9090/manager/text'
         DEPLOY_PATH = '/myapp'
         WAR_FILE_PATH = 'C:\\Users\\KHADEERUN\\.jenkins\\workspace\\TomcatDeployDemo\\target\\myapp.war'
     }
@@ -40,17 +40,17 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 script {
-                    bat """
-                    if exist "${env.WAR_FILE_PATH}" (
-                        echo WAR file found. Proceeding with deployment.
+                    if (fileExists(env.WAR_FILE_PATH)) {
+                        echo "WAR file found. Proceeding with deployment."
                         withCredentials([usernamePassword(credentialsId: "${env.TOMCAT_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                            bat "curl -u %USERNAME%:%PASSWORD% -T \\"${env.WAR_FILE_PATH}\\" \\"${env.TOMCAT_URL}/deploy?path=${env.DEPLOY_PATH}&update=true\\""
+                            bat """
+                                curl -u %USERNAME%:%PASSWORD% -T "${env.WAR_FILE_PATH}" "${env.TOMCAT_URL}/deploy?path=${env.DEPLOY_PATH}&update=true"
+                            """
                         }
-                    ) else (
-                        echo WAR file not found: ${env.WAR_FILE_PATH}
-                        exit 1
-                    )
-                    """
+                    } else {
+                        echo "WAR file not found: ${env.WAR_FILE_PATH}"
+                        error("Deployment aborted due to missing WAR file.")
+                    }
                 }
             }
         }
