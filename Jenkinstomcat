@@ -29,15 +29,11 @@ pipeline {
             }
         }
 
-        stage('Build') {
+            stage('Build') {
             steps {
                 script {
-                    def buildDir = 'dist/'
-                    if (fileExists(buildDir)) {
-                        bat "jar -cvf ${env.WORKSPACE}\\myapp.war -C ${buildDir} ."
-                    } else {
-                        error "Build directory '${buildDir}' does not exist"
-                    }
+                    def warFile = 'myapp.war'
+                    bat "jar -cvf ${warFile} -C dist/ ."
                 }
             }
         }
