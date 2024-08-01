@@ -44,7 +44,7 @@ NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSIns
         stage('Deploy to Tomcat') {
             steps {
                 script {
-                    bat "curl -u admin:${TOMCAT_CREDENTIALS_ID} -T 'C:\Users\KHADEERUN\Downloads\apache-tomcat-10.1.26-windows-x64\apache-tomcat-10.1.26\webapps\myapp' '${TOMCAT_URL}/deploy?path=${DEPLOY_PATH}&update=true'"
+                    bat "curl -u admin:${TOMCAT_CREDENTIALS_ID} -T 'C:/Users/KHADEERUN/Downloads/apache-tomcat-10.1.26-windows-x64/apache-tomcat-10.1.26/webapps/myapp' '${TOMCAT_URL}/deploy?path=${DEPLOY_PATH}&update=true'"
                 }
             }
         }
