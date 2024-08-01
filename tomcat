@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+        NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
         PATH = "${NODEJS_HOME}/bin:${env.PATH}"
-        GITHUB_CREDENTIALS_ID = 'MyGitHubCreds'
-        TOMCAT_CREDENTIALS_ID = 'tomcatcredentialshub'
-        TOMCAT_URL = 'http://your-tomcat-server:9090/manager/text'
+        GIT_CREDENTIALS = 'MyGitHubCreds'  // Your Git credentials ID
+        TOMCAT_CREDENTIALS = 'tomcatcredentialshub'  // Your Tomcat credentials ID
+        TOMCAT_URL = 'http://your-tomcat-server:9090/manager/text'  // Tomcat Manager URL
         DEPLOY_PATH = '/myapp'
     }
 
@@ -24,34 +24,24 @@ NODEJS_HOME = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSIns
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    bat 'npm install'
-                }
-            }
-        }
-
         stage('Run Tests') {
             steps {
-                script {
-                    bat 'npx playwright test'
-                }
+                bat 'npx playwright test'
             }
         }
 
         stage('Build WAR') {
             steps {
-                script {
-                    bat 'npm run build' // Assuming you have a build script to create WAR
-                }
+                bat 'npm run build' // Assuming you have a build script to create WAR
             }
         }
 
         stage('Deploy to Tomcat') {
             steps {
-                script {
-                    bat "curl -u admin:${TOMCAT_CREDENTIALS_ID} -T 'C:/Users/KHADEERUN/Downloads/apache-tomcat-10.1.26-windows-x64/apache-tomcat-10.1.26/webapps/myapp' '${TOMCAT_URL}/deploy?path=${DEPLOY_PATH}&update=true'"
+                withCredentials([usernamePassword(credentialsId: "${env.TOMCAT_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    bat """
+                    curl -u %USERNAME%:%PASSWORD% -T "${env.WORKSPACE}/target/myapp.war" "${env.TOMCAT_URL}/deploy?path=${env.DEPLOY_PATH}&update=true"
+                    """
                 }
             }
         }
