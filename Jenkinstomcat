@@ -38,15 +38,20 @@ pipeline {
             }
         }
 
+      
         stage('Deploy') {
             steps {
-                deploy adapters: [tomcat9(credentialsId: "${env.TOMCAT_CREDENTIALS}", path: '', url: 'http://localhost:9090/manager/html')],
-                        contextPath: '/myapp',
-                        war: '**/*.war'
+                withCredentials([usernamePassword(credentialsId: "${env.TOMCAT_CREDENTIALS}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    script {
+deploy adapters: [tomcat9(credentialsId: 'tomcatcredentialshub', path: '', url: 'http://localhost:9090/manager/html')], contextPath: 'myapp', war: '**/*.war'
+                        bat """
+                        curl -u %USERNAME%:%PASSWORD% -T "${env.WORKSPACE}\\myapp.war" "${env.TOMCAT_URL}/deploy?path=/myapp&update=true"
+                        """
+                    }
+                }
             }
         }
     }
-
     post {
         always {
             archiveArtifacts artifacts: '**/myapp.war', allowEmptyArchive: true
