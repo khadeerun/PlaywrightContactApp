@@ -1,0 +1,64 @@
+pipeline {
+    agent any
+
+    environment {
+        JMETER_HOME = "D:/Projects/Duplicates/JMeter/apache-jmeter-5.6.3/bin" // Update this to your JMeter installation path
+        JMETER_TEST_PLAN = "‪JMetertest.jmx"
+        RESULTS_DIR = "D:/jmeter/jmeter-results"
+        REPORT_DIR = "D:/jmeter/jmeter-reports"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from your repository
+                git url: 'https://github.com/khadeerun/PlaywrightContactApp', branch: 'main'
+            }
+        }
+
+        stage('Run JMeter Tests') {
+            steps {
+                script {
+                    // Run JMeter tests in non-GUI mode
+                    bat """
+                        mkdir -p ${RESULTS_DIR}
+                        ${JMETER_HOME}/bin/jmeter -n -t ${JMETER_TEST_PLAN} -l ${RESULTS_DIR}/results.jtl
+                    """
+                }
+            }
+        }
+
+        stage('Generate HTML Report') {
+            steps {
+                script {
+                    // Generate HTML report from the .jtl file
+                    bat """
+                        mkdir -p ${REPORT_DIR}
+                        ${JMETER_HOME}/bin/jmeter -g ${RESULTS_DIR}/results.jtl -o ${REPORT_DIR}
+                    """
+                }
+            }
+        }
+
+        stage('Publish HTML Report') {
+            steps {
+                // Publish the HTML report to Jenkins
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: "${REPORT_DIR}",
+                    reportFiles: 'index.html',
+                    reportName: 'JMeter Test Report'
+                ])
+            }
+        }
+    }
+
+    post {
+        always {
+            // Clean up the workspace
+            cleanWs()
+        }
+    }
+}
