@@ -59,6 +59,7 @@ pipeline {
         always {
             // Clean up the workspace
             cleanWs()
+git url: 'https://github.com/khadeerun/PlaywrightContactApp', branch: 'main'
         }
     }
 }
