@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        JMETER_HOME = "D:/Projects/Duplicates/JMeter/apache-jmeter-5.6.3" // Update this to your JMeter installation path
+        JMETER_HOME = "D:\Projects\Duplicates\JMeter\apache-jmeter-5.6.3" // Update this to your JMeter installation path
         JMETER_TEST_PLAN = "‪JMetertest.jmx"
         RESULTS_DIR = "jmeter-results"
         REPORT_DIR = "jmeter-reports"
